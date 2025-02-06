@@ -25,6 +25,11 @@ export default defineConfig({
     port: 8081,
     historyApiFallback: true,
     watchFiles: [path.resolve(__dirname, "src")],
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers': '*',
+    },
   },
   output: {
     // You need to set a unique value that is not equal to other applications

@@ -1,11 +1,11 @@
 import ReactDOM from "react-dom/client";
+import GalleryTest from "./components/GalleryTest";
 
 import "./index.css";
 
 const App = () => (
   <div className="container">
-    <div>Name: gallery</div>
-    <div>Framework: react-19</div>
+    <GalleryTest />
   </div>
 );
 

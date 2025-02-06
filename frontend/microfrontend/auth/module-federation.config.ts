@@ -1,5 +1,8 @@
 export const mfConfig = {
   name: "auth",
-  exposes: {},
+  dts: false,
+  exposes: {
+    "./AuthTest": "./src/components/AuthTest.tsx"
+  },
   shared: ["react", "react-dom"],
 };

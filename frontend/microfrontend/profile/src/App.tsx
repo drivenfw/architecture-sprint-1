@@ -1,11 +1,11 @@
 import ReactDOM from "react-dom/client";
+import ProfileTest from './components/ProfileTest';
 
 import "./index.css";
 
 const App = () => (
   <div className="container">
-    <div>Name: profile</div>
-    <div>Framework: react-19</div>
+    <ProfileTest />
   </div>
 );
 

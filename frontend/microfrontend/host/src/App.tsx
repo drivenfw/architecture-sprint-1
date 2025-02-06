@@ -1,11 +1,25 @@
+import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
 
 import "./index.css";
 
+const AuthTest = lazy(() => import('auth/AuthTest').catch(() => {
+  return { default: () => <div className='error'>Auth is not available!</div> };
+}));
+
+const ProfileTest = lazy(() => import('profile/ProfileTest').catch(() => {
+  return { default: () => <div className='error'>Profile is not available!</div> };
+}));
+
+const GalleryTest = lazy(() => import('gallery/GalleryTest').catch(() => {
+  return { default: () => <div className='error'>Gallery is not available!</div> };
+})); 
+
 const App = () => (
   <div className="container">
-    <div>Name: host</div>
-    <div>Framework: react-19</div>
+    <AuthTest />
+    <ProfileTest />
+    <GalleryTest />
   </div>
 );
 

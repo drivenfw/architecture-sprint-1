@@ -1,11 +1,11 @@
 import ReactDOM from "react-dom/client";
+import AuthTest from './components/AuthTest';
 
 import "./index.css";
 
 const App = () => (
   <div className="container">
-    <div>Name: auth</div>
-    <div>Framework: react-19</div>
+    <AuthTest />
   </div>
 );
 
