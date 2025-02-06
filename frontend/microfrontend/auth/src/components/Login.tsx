@@ -13,9 +13,15 @@ function Login (){
       .login(email, password)
       .then((res) => {
         console.log('Login: success - ', res);
+        dispatchEvent(new CustomEvent("login-success", {
+          detail: { email }
+        }));
       })
       .catch((err) => {
         console.log('Login: failure - ', err);
+        dispatchEvent(new CustomEvent("login-failure", {
+          detail: { email }
+        }));
       });
   }
 

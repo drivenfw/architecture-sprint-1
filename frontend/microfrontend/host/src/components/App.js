@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Route, useHistory, Switch } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
@@ -10,11 +10,20 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
-import Register from "./Register";
-import Login from "./Login";
 import InfoTooltip from "./InfoTooltip";
 import ProtectedRoute from "./ProtectedRoute";
-import * as auth from "../utils/auth.js";
+
+const auth = import('auth/auth').catch(() => {
+  console.log('auth is not available')
+});
+
+const Login = lazy(() => import('auth/Login').catch(() => {
+  return { default: () => <div className='error'>Login is not available!</div> };
+}));
+
+const Register = lazy(() => import('auth/Register').catch(() => {
+  return { default: () => <div className='error'>Register is not available!</div> };
+}));
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -52,8 +61,8 @@ function App() {
   React.useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
-      auth
-        .checkToken(token)
+      auth.then(({ checkToken }) => {
+        checkToken(token)
         .then((res) => {
           setEmail(res.data.email);
           setIsLoggedIn(true);
@@ -63,8 +72,27 @@ function App() {
           localStorage.removeItem("jwt");
           console.log(err);
         });
+      });
     }
   }, [history]);
+
+  React.useEffect(() => {
+    addEventListener('login-success', handleLoginSuccess);
+    addEventListener('login-failure', handleLoginFailure);
+    return () => {
+      removeEventListener('login-success', handleLoginSuccess);
+      removeEventListener('login-failure', handleLoginFailure);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    addEventListener('register-success', handleRegisterSuccess);
+    addEventListener('register-failure', handleRegisterFailure);
+    return () => {
+      removeEventListener('register-success', handleRegisterSuccess);
+      removeEventListener('register-failure', handleRegisterFailure);
+    };
+  }, []);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -141,37 +169,36 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function onRegister({ email, password }) {
-    auth
-      .register(email, password)
-      .then((res) => {
-        setTooltipStatus("success");
-        setIsInfoToolTipOpen(true);
-        history.push("/signin");
-      })
-      .catch((err) => {
-        setTooltipStatus("fail");
-        setIsInfoToolTipOpen(true);
-      });
+  function handleRegisterSuccess({ detail: { email } }) {
+    console.log('App: register success - ', email);
+    setTooltipStatus("success");
+    setIsInfoToolTipOpen(true);
+    history.push("/signin");
   }
 
-  function onLogin({ email, password }) {
-    auth
-      .login(email, password)
-      .then((res) => {
-        setIsLoggedIn(true);
-        setEmail(email);
-        history.push("/");
-      })
-      .catch((err) => {
-        setTooltipStatus("fail");
-        setIsInfoToolTipOpen(true);
-      });
+  function handleRegisterFailure({ detail: { email } }) {
+    console.log('App: register failure - ', email);
+    setTooltipStatus("fail");
+    setIsInfoToolTipOpen(true);
   }
 
-  function onSignOut() {
+  function handleLoginSuccess({ detail: { email } }) {
+    console.log('App: login success - ', email);
+    setIsLoggedIn(true);
+    setEmail(email);
+    history.push("/");
+  }
+
+  function handleLoginFailure({ detail: { email } }) {
+    console.log('App: login failure - ', email);
+    setTooltipStatus("fail");
+    setIsInfoToolTipOpen(true);
+  }
+
+  async function onSignOut() {
     // при вызове обработчика onSignOut происходит удаление jwt
-    localStorage.removeItem("jwt");
+    // localStorage.removeItem("jwt");
+    (await auth).signOut();
     setIsLoggedIn(false);
     // После успешного вызова обработчика onSignOut происходит редирект на /signin
     history.push("/signin");
@@ -197,10 +224,10 @@ function App() {
             loggedIn={isLoggedIn}
           />
           <Route path="/signup">
-            <Register onRegister={onRegister} />
+            <Register />
           </Route>
           <Route path="/signin">
-            <Login onLogin={onLogin} />
+            <Login />
           </Route>
         </Switch>
         <Footer />

@@ -41,3 +41,12 @@ export const checkToken = (token) => {
   })
   .then(getResponse)
 }
+export const signOut = () => {
+  localStorage.removeItem("jwt");
+};
+
+export default {
+  checkToken,
+  signOut
+};
+

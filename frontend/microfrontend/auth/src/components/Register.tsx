@@ -11,10 +11,16 @@ function Register (){
     auth
       .register(email, password)
       .then((res) => {
-        console.log('Register: success - ', res);  
+        console.log('Register: success - ', res);
+        dispatchEvent(new CustomEvent("register-success", {
+          detail: { email }
+        }));
       })
       .catch((err) => {
         console.log('Register: failure - ', err);
+        dispatchEvent(new CustomEvent("register-failure", {
+          detail: { email }
+        }));
       });
   }
 
