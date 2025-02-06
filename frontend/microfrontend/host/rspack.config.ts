@@ -18,7 +18,7 @@ export default defineConfig({
     main: "./src/index.ts",
   },
   resolve: {
-    extensions: ["...", ".ts", ".tsx", ".jsx"],
+    extensions: ["...", ".ts", ".tsx", ".js", ".jsx"],
   },
 
   devServer: {
