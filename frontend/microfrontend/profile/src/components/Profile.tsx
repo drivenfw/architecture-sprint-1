@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import EditAvatarPopup from "./EditAvatarPopup";
 import EditProfilePopup from "./EditProfilePopup";
 import api from '../utils/api';
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
+const AddPlace = lazy(() => import('gallery/AddPlace').catch(() => {
+  return { default: () => <div className='error'>AddPlace is not available!</div> };
+}));
 
 function Profile() {
   const [currentUser, setCurrentUser] = React.useState<{ name: string, about: string }>({ name: '', about: '' });
@@ -52,7 +56,6 @@ function Profile() {
       .setUserInfo(userUpdate)
       .then((newUserData) => {
         setCurrentUser(newUserData);
-        closeAllPopups();
       })
       .catch((err) => console.log(err));
   }
@@ -76,7 +79,7 @@ function Profile() {
           <button className="profile__edit-button" type="button" onClick={handleEditProfileClick}></button>
           <p className="profile__description">{currentUser.about}</p>
         </div>
-        {/* <button className="profile__add-button" type="button" onClick={onAddPlace}></button> */}
+        <AddPlace />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onUpdateAvatar={handleUpdateAvatar}

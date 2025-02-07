@@ -4,7 +4,6 @@
     "lib": ["DOM", "ES2020"],
     "module": "ESNext",
     "jsx": "react-jsx",
-    "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
     "isolatedModules": true,
