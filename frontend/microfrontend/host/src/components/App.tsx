@@ -35,21 +35,18 @@ function App() {
 
   // при монтировании App описан эффект, проверяющий наличие токена и его валидности
   React.useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (token) {
-      auth.then(({ checkToken }) => {
-        checkToken(token)
-        .then((res) => {
-          setEmail(res.data.email);
-          setIsLoggedIn(true);
-          history.push("/");
-        })
-        .catch((err) => {
-          localStorage.removeItem("jwt");
-          console.log(err);
-        });
+    auth.then(({ checkLoggedIn }) => {
+      checkLoggedIn()
+      .then((res) => {
+        setEmail(res.data.email);
+        setIsLoggedIn(true);
+        history.push("/");
+      })
+      .catch((err) => {
+        localStorage.removeItem("jwt");
+        console.log(err);
       });
-    }
+    });
   }, [history]);
 
   React.useEffect(() => {

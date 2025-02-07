@@ -44,9 +44,16 @@ export const checkToken = (token) => {
 export const signOut = () => {
   localStorage.removeItem("jwt");
 };
+export const checkLoggedIn = () => {
+  const token = localStorage.getItem("jwt");
+  if (token) {
+    return checkToken(token);
+  }
+  return Promise.reject('Auth: no token found');
+};
 
 export default {
-  checkToken,
+  checkLoggedIn,
   signOut
 };
 
