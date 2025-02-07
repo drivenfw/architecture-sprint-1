@@ -3,6 +3,7 @@ import Card from './Card';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import './styles.css';
 
 function Gallery() {
   const [cards, setCards] = React.useState([]);

@@ -1,11 +1,11 @@
 import ReactDOM from "react-dom/client";
-import ProfileTest from './components/ProfileTest';
+import Profile from './components/Profile';
 
 import "./index.css";
 
 const App = () => (
   <div className="container">
-    <ProfileTest />
+    <Profile />
   </div>
 );
 

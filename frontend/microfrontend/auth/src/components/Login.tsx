@@ -1,14 +1,12 @@
 import React from 'react';
-
 import * as auth from '../utils/auth';
-
-import '../blocks/login/login.css';
+import './styles.css';
 
 function Login (){
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  function onLogin({ email, password }) {
+  function handleLogin({ email, password }) {
     auth
       .login(email, password)
       .then((res) => {
@@ -31,7 +29,7 @@ function Login (){
       email,
       password
     }
-    onLogin(userData);
+    handleLogin(userData);
   }
   return (
     <div className="auth-form">

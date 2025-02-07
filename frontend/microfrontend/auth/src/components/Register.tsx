@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import * as auth from '../utils/auth';
+import './styles.css';
+
 
 function Register (){
   const [email, setEmail] = React.useState('');

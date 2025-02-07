@@ -3,6 +3,7 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import EditProfilePopup from "./EditProfilePopup";
 import api from '../utils/api';
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import './styles.css';
 
 const AddPlace = lazy(() => import('gallery/AddPlace').catch(() => {
   return { default: () => <div className='error'>AddPlace is not available!</div> };

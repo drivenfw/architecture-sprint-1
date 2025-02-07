@@ -1,6 +1,7 @@
 import React from 'react';
 import AddPlacePopup from './AddPlacePopup';
 import api from '../utils/api';
+import './styles.css';
 
 function AddPlace() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);

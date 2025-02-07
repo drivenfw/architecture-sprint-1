@@ -1,11 +1,13 @@
 import ReactDOM from "react-dom/client";
-import AuthTest from './components/AuthTest';
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 import "./index.css";
 
 const App = () => (
   <div className="container">
-    <AuthTest />
+    <Login />
+    <Register />
   </div>
 );
 

@@ -1,11 +1,13 @@
 import ReactDOM from "react-dom/client";
-import GalleryTest from "./components/GalleryTest";
+import AddPlace from "./components/AddPlace";
+import Gallery from "./components/Gallery";
 
 import "./index.css";
 
 const App = () => (
   <div className="container">
-    <GalleryTest />
+    <AddPlace />
+    <Gallery />
   </div>
 );
 
