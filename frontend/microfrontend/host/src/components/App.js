@@ -7,8 +7,6 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import EditProfilePopup from "./EditProfilePopup";
-import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import InfoTooltip from "./InfoTooltip";
 import ProtectedRoute from "./ProtectedRoute";
@@ -26,11 +24,7 @@ const Register = lazy(() => import('auth/Register').catch(() => {
 }));
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-    React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [cards, setCards] = React.useState([]);
 
@@ -50,8 +44,7 @@ function App() {
   React.useEffect(() => {
     api
       .getAppInfo()
-      .then(([cardData, userData]) => {
-        setCurrentUser(userData);
+      .then(([cardData]) => {
         setCards(cardData);
       })
       .catch((err) => console.log(err));
@@ -94,38 +87,23 @@ function App() {
     };
   }, []);
 
-  function handleEditProfileClick() {
-    setIsEditProfilePopupOpen(true);
-  }
+  React.useEffect(() => {
+    addEventListener('current-user-success', handleCurrentUserSuccess);
+    return () => removeEventListener('current-user-success', handleCurrentUserSuccess);
+  }, []);
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true);
   }
 
-  function handleEditAvatarClick() {
-    setIsEditAvatarPopupOpen(true);
-  }
-
   function closeAllPopups() {
-    setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
-    setIsEditAvatarPopupOpen(false);
     setIsInfoToolTipOpen(false);
     setSelectedCard(null);
   }
 
   function handleCardClick(card) {
     setSelectedCard(card);
-  }
-
-  function handleUpdateUser(userUpdate) {
-    api
-      .setUserInfo(userUpdate)
-      .then((newUserData) => {
-        setCurrentUser(newUserData);
-        closeAllPopups();
-      })
-      .catch((err) => console.log(err));
   }
 
   function handleUpdateAvatar(avatarUpdate) {
@@ -195,9 +173,12 @@ function App() {
     setIsInfoToolTipOpen(true);
   }
 
+  function handleCurrentUserSuccess({ detail: { userData } }) {
+    console.log('App: currentUser success', userData);
+    setCurrentUser(userData);
+  }
+
   async function onSignOut() {
-    // при вызове обработчика onSignOut происходит удаление jwt
-    // localStorage.removeItem("jwt");
     (await auth).signOut();
     setIsLoggedIn(false);
     // После успешного вызова обработчика onSignOut происходит редирект на /signin
@@ -215,9 +196,7 @@ function App() {
             path="/"
             component={Main}
             cards={cards}
-            onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
             onCardClick={handleCardClick}
             onCardLike={handleCardLike}
             onCardDelete={handleCardDelete}
@@ -231,22 +210,12 @@ function App() {
           </Route>
         </Switch>
         <Footer />
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onUpdateUser={handleUpdateUser}
-          onClose={closeAllPopups}
-        />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onAddPlace={handleAddPlaceSubmit}
           onClose={closeAllPopups}
         />
         <PopupWithForm title="Вы уверены?" name="remove-card" buttonText="Да" />
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onUpdateAvatar={handleUpdateAvatar}
-          onClose={closeAllPopups}
-        />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <InfoTooltip
           isOpen={isInfoToolTipOpen}

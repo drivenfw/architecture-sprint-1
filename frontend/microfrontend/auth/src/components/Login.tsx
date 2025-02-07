@@ -20,7 +20,7 @@ function Login (){
       .catch((err) => {
         console.log('Login: failure - ', err);
         dispatchEvent(new CustomEvent("login-failure", {
-          detail: { email }
+          detail: err
         }));
       });
   }
