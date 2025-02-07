@@ -64,7 +64,7 @@ function Gallery() {
   }
 
   function handleAddPlaceSuccess({ detail: { newCard } }) {
-    console.log('Gallery: addPlace success', newCard, cards);
+    console.log('Gallery: addPlace success', newCard);
     setCards([newCard, ...cards]);
   }
 
