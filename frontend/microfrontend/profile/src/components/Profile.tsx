@@ -41,7 +41,7 @@ function Profile() {
   }
 
   function handleEditAvatarClose() {
-    setIsEditProfilePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
   }
 
   function handleEditProfileClick() {
@@ -57,6 +57,7 @@ function Profile() {
       .setUserInfo(userUpdate)
       .then((newUserData) => {
         setCurrentUser(newUserData);
+        handleEditProfileClose();
       })
       .catch((err) => console.log(err));
   }

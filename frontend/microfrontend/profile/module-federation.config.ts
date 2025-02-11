@@ -1,5 +1,6 @@
 export const mfConfig = {
   name: "profile",
+  dts: false,
   exposes: {
     "./Profile": "./src/components/Profile"
   },
