@@ -1,7 +1,11 @@
 # Проектная работа 1 спринта
 
+<span style="color:red">
+Не нашел скрины на гитхабе с ошибками запуска микрофронтов.
+Подумал, что могло пойти не так - обновил инструкцию по запуску
+</span>
 
-
+<br /><br /><br />
 
 # 1. Разделение приложения Mesto на микрофронтенды
 
@@ -16,24 +20,28 @@
 ```
 // Запуск auth на порту 8081
 $ cd frontend/microfrontend/auth
+$ npm install
 $ npm run start
 ```
 
 ```
 // Запуск profile на порту 8082
 $ cd frontend/microfrontend/profile
+$ npm install
 $ npm run start
 ```
 
 ```
 // Запуск gallery на порту 8083
 $ cd frontend/microfrontend/gallery
+$ npm install
 $ npm run start
 ```
 
 ```
 // Запуск host на порту 8080
 $ cd frontend/microfrontend/host
+$ npm install
 $ npm run start
 ```
 
@@ -42,29 +50,33 @@ $ npm run start
 ```
 // Запуск auth на порту 8081
 $ cd frontend/microfrontend/auth
+$ npm install
 $ npm run build
-$ http-server ./dist -p 8081 --cors
+$ npx http-server ./dist -p 8081 --cors
 ```
 
 ```
 // Запуск profile на порту 8082
 $ cd frontend/microfrontend/profile
+$ npm install
 $ npm run build
-$ http-server ./dist -p 8082 --cors
+$ npx http-server ./dist -p 8082 --cors
 ```
 
 ```
 // Запуск gallery на порту 8083
 $ cd frontend/microfrontend/gallery
+$ npm install
 $ npm run build
-$ http-server ./dist -p 8083 --cors
+$ npx http-server ./dist -p 8083 --cors
 ```
 
 ```
 // Запуск host на порту 8080
 $ cd frontend/microfrontend/host
+$ npm install
 $ npm run build
-$ http-server ./dist -p 8080
+$ npx http-server ./dist -p 8080
 ```
 
 ## Описание работы
