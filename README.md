@@ -106,4 +106,4 @@ $ npx http-server ./dist -p 8080
 
 # 2. Декомпозиция веб-приложения на Django на микросервисы
 
-[Схема архитектурного решения с микросервисами](https://disk.yandex.ru/d/QIaY3tzk3NEB1g)
+[Схема архитектурного решения с микросервисами](https://disk.yandex.ru/d/th7ARSjj-Q0_pQ)
